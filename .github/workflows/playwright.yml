@@ -24,7 +24,7 @@ jobs:
           . venv/bin/activate
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install playwright
+          pip install playwright pytest-playwright
           playwright install --with-deps
 
       - name: Run Playwright tests
