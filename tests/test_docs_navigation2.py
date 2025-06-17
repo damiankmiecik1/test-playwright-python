@@ -1,9 +1,9 @@
 import re
 from playwright.sync_api import Page, expect
 
-def test_navigate_to_api (page: Page)
+def test_navigate_to_api(page: Page):
     # 1. Otwórz stronę główną
-    page.goto("https://playwright.dev/")\
+    page.goto("https://playwright.dev/")
     # 2. Kliknij w link "API" w górnym menu
     page.get_by_role("link", name="API").click()
     # 3. Asercja
