@@ -87,3 +87,35 @@ def test_reports_form_shows_error_message_for_empty_email(home_page: HomePage):
         "element => element.validationMessage"
     )
     assert validation_message == "Please fill out this field." # Oczekiwany komunikat walidacji HTML5
+
+def test_reports_form_shows_error_message_for_email_without_at_sign(home_page: HomePage):
+    """Sprawdza, czy natywna walidacja przeglądarki HTML5 działa i pokazuje błąd dla wypełnionego pola bez znaku małpy."""
+    
+    home_page.reports_from_email_input.fill("niepoprawnyemail.com")
+    home_page.reports_from_email_subscribe_button.click()
+    validation_message = home_page.reports_from_email_input.evaluate(
+        "element => element.validationMessage"
+    )
+    assert validation_message == "Please include an '@' in the email address. 'niepoprawnyemail.com' is missing an '@'." # Oczekiwany komunikat walidacji HTML5
+
+def test_reports_form_shows_error_message_for_email_without_text_after_at_sign(home_page: HomePage):
+    """Sprawdza, czy natywna walidacja przeglądarki HTML5 działa i pokazuje błąd dla wypełnionego pola bez domeny po znaku małpy."""
+    
+    home_page.reports_from_email_input.fill("niepoprawnyemail@")
+    home_page.reports_from_email_subscribe_button.click()
+    validation_message = home_page.reports_from_email_input.evaluate(
+        "element => element.validationMessage"
+    )
+    assert validation_message == "Please enter a part following '@'. 'niepoprawnyemail@' is incomplete." # Oczekiwany komunikat walidacji HTML5
+
+@pytest.mark.xfail(reason="Walidacja znika po edycji pola email, więc nie można sprawdzić komunikatu błędu")
+def test_validation_message_persists_after_editing_invalid_email(home_page: HomePage, page: Page):
+    """Testuje czy komunikat walidacji utrzymuje się po edycji niepoprawnego adresu email. Obecnie ten test powinien zakończyć się porażką (XFAIL), dopóki błąd nie zostanie naprawiony."""
+    
+    email_input = home_page.reports_from_email_input
+    email_input.fill("niepoprawnyemail@")
+    email_input.press("d")
+    email_input.press("Backspace")
+
+    final_message = email_input.evaluate("element => element.validationMessage")
+    assert "Please enter a part following" in final_message
