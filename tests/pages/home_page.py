@@ -1,0 +1,59 @@
+from playwright.sync_api import Page, Locator
+
+class HomePage:
+    def __init__(self, page: Page):
+        self.page = page
+
+        # Locators
+        self.main_header = page.locator('[data-testid="main-header"]')
+        self.header_email = page.locator('[data-testid="header-email"]')
+        self.contact_question = page.locator('[data-testid="contact-question-text"]')
+        self.footer_about = page.locator('[data-testid="footer-about"]')
+        self.footer_about_text = page.locator('[data-testid="footer-about-text"]')
+        self.footer_links = page.locator('[data-testid="footer-links"]')
+        self.footer_links_text = page.locator('[data-testid="footer-links-text"]')
+        self.footer_reports = page.locator('[data-testid="footer-reports"]')
+        self.footer_reports_text = page.locator('[data-testid="footer-reports-text"]')
+        self.footer_reports_email = page.locator('[data-testid="footer-reports-email"]')
+        self.footer_contact = page.locator('[data-testid="footer-contact"]')
+        self.footer_contact_text = page.locator('[data-testid="footer-contact-phone"]')
+        self.footer_contact_timeframe = page.locator('[data-testid="footer-contact-timeframe"]')
+        self.footer_contact_address = page.locator('[data-testid="footer-contact-address"]')
+        self.footer_contact_email = page.locator('[data-testid="footer-contact-email"]')
+        self.footer_copyright = page.locator('[data-testid="footer-copyright"]')
+
+
+        
+        # Locator for navigation links
+        self.nav_links_container = page.locator('[data-testid="nav-link"]')
+
+        # Locator for each navigation link
+        self.home_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/"]')
+        self.blog_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/blog/"]')
+        self.about_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/onas/"]')
+        self.gallery_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/galeria/"]')
+        self.contact_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/kontakt/"]')
+        self.shop_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/sklep/"]')
+        self.cart_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/koszyk/"]')
+        self.registration_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/rejestracja/"]')
+        self.my_account_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/moje-konto-2/"]')
+        self.login_link = self.nav_links_container.locator('a[href="https://srv88380.seohost.com.pl/login-2/"]')
+
+        # Locator for icon container
+        self.social_media_container = page.locator('[data-testid="social-media-container"]')
+        self.phone_container = page.locator('[data-testid="phone-container"]')
+
+        # Locator for phone and each social media icon
+        self.facebook_icon_link = self.social_media_container.locator('a[href*="https://www.facebook.com/rickroll548/?locale=pl_PL"]')
+        self.twitter_icon_link = self.social_media_container.locator('a[href*="https://x.com/rickroll_meme_"]')
+        self.youtube_icon_link = self.social_media_container.locator('a[href*="https://www.youtube.com/watch?v=dQw4w9WgXcQ"]')
+        self.instagram_icon_link = self.social_media_container.locator('a[href*="https://www.instagram.com/rick_astley_memes/?hl=pl"]')
+        self.phone_icon = self.phone_container.locator(".pagelayer-phone-icon")
+        self.phone_number = self.phone_container.locator("span.pagelayer-phone")
+        
+
+    def navigate(self):
+        self.page.goto("/")
+
+    def get_nav_link_by_text(self, text: str) -> Locator:
+        return self.page.locator(f'[data-testid="nav-link"]:has-text("{text}")')
