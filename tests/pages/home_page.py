@@ -50,6 +50,11 @@ class HomePage:
         self.instagram_icon_link = self.social_media_container.locator('a[href*="https://www.instagram.com/rick_astley_memes/?hl=pl"]')
         self.phone_icon = self.phone_container.locator(".pagelayer-phone-icon")
         self.phone_number = self.phone_container.locator("span.pagelayer-phone")
+
+        # Reports from elements (inside the main container)
+        self.reports_from_email_input = self.footer_reports_email.locator('input[type="email"]')
+        self.reports_from_email_subscribe_button = self.footer_reports_email.locator('button')
+        self.reports_from_email_message = self.footer_reports_email.locator('.pagelayer-message-box:visible')
         
 
     def navigate(self):

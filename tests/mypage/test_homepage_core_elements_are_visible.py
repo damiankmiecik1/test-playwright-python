@@ -69,3 +69,21 @@ def test_footer_elements_are_visible(home_page: HomePage):
     expect(home_page.footer_contact_email).to_have_text("contact@domain.com")
     expect(home_page.footer_copyright).to_be_visible()
     expect(home_page.footer_copyright).to_have_text("© 2025 Pasja Finansów")
+
+def test_reports_form_shows_error_message_for_valid_email(home_page: HomePage):
+    """Sprawdza, czy formularz raportów wyświetla oczekiwany komunikat błędu (bo backend nie działa)."""
+    
+    home_page.reports_from_email_input.fill("poprawny@email.com")
+    home_page.reports_from_email_subscribe_button.click()
+    expect(home_page.reports_from_email_message).to_be_visible()
+    expect(home_page.reports_from_email_message).to_have_text("Your message could not be sent ! Please try again.")  # Oczekiwany komunikat błędu
+
+def test_reports_form_shows_error_message_for_empty_email(home_page: HomePage):
+    """Sprawdza, czy natywna walidacja przeglądarki HTML5 działa i pokazuje błąd dla pustego pola."""
+    
+    home_page.reports_from_email_input.click()  # Klika w puste pole
+    home_page.reports_from_email_subscribe_button.click()
+    validation_message = home_page.reports_from_email_input.evaluate(
+        "element => element.validationMessage"
+    )
+    assert validation_message == "Please fill out this field." # Oczekiwany komunikat walidacji HTML5
