@@ -4,10 +4,12 @@ class HomePage:
     def __init__(self, page: Page):
         self.page = page
 
-        # Locators
+        # Header locators
         self.main_header = page.locator('[data-testid="main-header"]')
         self.header_email = page.locator('[data-testid="header-email"]')
         self.contact_question = page.locator('[data-testid="contact-question-text"]')
+
+        # Footer locators
         self.footer_about = page.locator('[data-testid="footer-about"]')
         self.footer_about_text = page.locator('[data-testid="footer-about-text"]')
         self.footer_links = page.locator('[data-testid="footer-links"]')
@@ -22,8 +24,6 @@ class HomePage:
         self.footer_contact_email = page.locator('[data-testid="footer-contact-email"]')
         self.footer_copyright = page.locator('[data-testid="footer-copyright"]')
 
-
-        
         # Locator for navigation links
         self.nav_links_container = page.locator('[data-testid="nav-link"]')
 
