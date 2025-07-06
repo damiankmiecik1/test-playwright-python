@@ -22,11 +22,8 @@ FRONT_NAV_LINKS = [
     ("library_link", "https://srv88380.seohost.com.pl/2025/06/09/wpis-testowy/"),
 ]
 
-def test_header_content_is_visible_and_correct(page: Page):
+def test_header_content_is_visible_and_correct(home_page: HomePage):
     """Sprawdza widoczność i treść głównych elementów nagłówka."""
-    home_page = HomePage(page)
-    home_page.navigate()
-    
     expect(home_page.main_header).to_be_visible()
     expect(home_page.main_header).to_have_text("Pasja Finansów")
     expect(home_page.header_email).to_be_visible()
