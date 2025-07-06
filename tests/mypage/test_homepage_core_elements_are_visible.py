@@ -15,6 +15,13 @@ SOCIAL_MEDIA_DATA = [
     ("instagram_icon_link", "https://www.instagram.com/rick_astley_memes/?hl=pl")
 ]
 
+FRONT_NAV_LINKS = [
+    ("begin_course_link", "https://srv88380.seohost.com.pl/2025/06/09/wpis-testowy/"),
+    ("online_courses_link", "https://srv88380.seohost.com.pl/2025/06/09/wpis-testowy/"),
+    ("experts_link", "https://srv88380.seohost.com.pl/2025/06/09/wpis-testowy/"),
+    ("library_link", "https://srv88380.seohost.com.pl/2025/06/09/wpis-testowy/"),
+]
+
 def test_header_content_is_visible_and_correct(page: Page):
     """Sprawdza widoczność i treść głównych elementów nagłówka."""
     home_page = HomePage(page)
@@ -29,6 +36,21 @@ def test_header_content_is_visible_and_correct(page: Page):
     expect(home_page.phone_number).to_be_visible()
     expect(home_page.phone_number).to_have_text("+48112233445")
 
+def test_front_content_is_visible_and_correct(home_page: HomePage):
+    """Sprawdza widoczność i treść głównych elementów frontu."""
+    expect(home_page.front_title).to_be_visible()
+    expect(home_page.front_title).to_have_text("PASJA FINANSÓW")
+    expect(home_page.front_subtitle).to_be_visible()
+    expect(home_page.front_subtitle).to_have_text("Pomożemy Ci odkryć nieznane!")
+    expect(home_page.begin_course).to_be_visible()
+    expect(home_page.begin_course).to_have_text("ZACZNIJ KURS")
+    expect(home_page.online_courses).to_be_visible()
+    expect(home_page.online_courses).to_have_text("Kursy online\nDowiedz się więcej")
+    expect(home_page.experts).to_be_visible()
+    expect(home_page.experts).to_have_text("Eksperci w dziedzinie\nDowiedz się więcej")
+    expect(home_page.library).to_be_visible()
+    expect(home_page.library).to_have_text("Biblioteka wiedzy\nDowiedz się więcej")
+
 @pytest.mark.parametrize("link_text", NAV_LINKS)
 def test_navigation_links_are_visible(home_page: HomePage, link_text: str):
     nav_link = home_page.get_nav_link_by_text(link_text)
@@ -40,6 +62,13 @@ def test_social_media_links_are_correct(home_page: HomePage, icon_locator_name: 
     icon_locator = getattr(home_page, icon_locator_name)
     expect(icon_locator).to_be_visible()
     expect(icon_locator).to_have_attribute("href", expected_url)
+
+@pytest.mark.parametrize("locator_name, expected_url", FRONT_NAV_LINKS)
+def test_front_navigation_links_are_correct(home_page: HomePage, locator_name: str, expected_url: str):
+    """Sprawdza czy linki w sekcji frontowej są widoczne i mają poprawne URL."""
+    link_locator = getattr(home_page, locator_name)
+    expect(link_locator).to_be_visible()
+    expect(link_locator).to_have_attribute("href", expected_url)
 
 def test_footer_elements_are_visible(home_page: HomePage):
     """Sprawdza widoczność elementów stopki."""

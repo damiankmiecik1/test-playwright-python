@@ -9,6 +9,20 @@ class HomePage:
         self.header_email = page.locator('[data-testid="header-email"]')
         self.contact_question = page.locator('[data-testid="contact-question-text"]')
 
+        # Front locators
+        self.front_title = page.locator('[data-testid="front-title"]')
+        self.front_subtitle = page.locator('[data-testid="front-subtitle"]')
+        self.begin_course = page.locator('[data-testid=begin-course]')
+        self.online_courses = page.locator('[data-testid="online-courses"]')
+        self.experts = page.locator('[data-testid="experts"]')
+        self.library = page.locator('[data-testid="library"]')
+
+        # Links inside the front section
+        self.begin_course_link = self.begin_course.locator('a:has-text("ZACZNIJ KURS")')
+        self.online_courses_link = self.online_courses.locator('a:has-text("Dowiedz się więcej")')
+        self.experts_link = self.experts.locator('a:has-text("Dowiedz się więcej")')
+        self.library_link = self.library.locator('a:has-text("Dowiedz się więcej")')
+
         # Footer locators
         self.footer_about = page.locator('[data-testid="footer-about"]')
         self.footer_about_text = page.locator('[data-testid="footer-about-text"]')
