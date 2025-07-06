@@ -70,6 +70,13 @@ class HomePage:
         self.reports_from_email_subscribe_button = self.footer_reports_email.locator('button')
         self.reports_from_email_message = self.footer_reports_email.locator('.pagelayer-message-box:visible')
         
+        # Locators for welcoming section
+        self.welcome = page.locator('[data-testid="welcome"]')
+        self.welcome_text = page.locator('[data-testid="welcome-text"]')
+        self.welcome_image = page.locator('[data-testid="welcome-image"] img')
+
+        # Locator for all cards in the courses section
+        self.course_cards = page.locator('[data-testid="course-cards"]')
 
     def navigate(self):
         self.page.goto("/")
