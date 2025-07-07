@@ -79,7 +79,7 @@ class HomePage:
         self.course_cards = page.locator('[data-testid="course-cards"]')
 
     def navigate(self):
-        self.page.goto("/")
+        self.page.goto("/", wait_until="domcontentloaded")
 
     def get_nav_link_by_text(self, text: str) -> Locator:
         return self.page.locator(f'[data-testid="nav-link"]:has-text("{text}")')
