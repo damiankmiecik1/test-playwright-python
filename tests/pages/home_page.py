@@ -74,6 +74,11 @@ class HomePage:
         # Locator for all cards in the courses section
         self.course_cards = page.locator('[data-testid="course-cards"]')
 
+        # Locator for experts section
+        self.expert_section_header = page.locator('[data-testid="expert-section-header"]')
+        self.expert_profile_card = page.locator('[data-testid="expert-profile-card"]')
+        self.expert_social_containers = page.locator('[data-testid="social-links-container"]')
+
     def get_social_media_icon_by_href(self, href: str) -> Locator:
         """Zwraca lokator ikony social media, szukając go po fragmencie atrybutu href."""
         return self.social_media_container.locator(f'a[href*="{href}"]')

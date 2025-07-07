@@ -36,3 +36,37 @@ def test_all_popular_courses_have_correct_structures(home_page: HomePage):
         buy_now_button = card.locator('.pagelayer-service-btn')
         expect(buy_now_button).to_be_visible()
         expect(buy_now_button).to_have_text("Kup teraz")
+
+def test_expert_section_has_correct_structure(home_page: HomePage):
+    """Sprawdza, czy sekcja "Poznaj naszych ekspertów" jest poprawnie wyświetlana i czy wszystkie profile mają spójną, wymaganą strukturę."""
+    header = home_page.expert_section_header
+    header.scroll_into_view_if_needed()
+    expect(header).to_be_visible()
+    expect(header).to_have_text("Poznaj naszych ekspertów")
+
+    all_expert_cards = home_page.expert_profile_card
+    all_socials = home_page.expert_social_containers
+
+    expect(all_expert_cards).to_have_count(4)
+    expect(all_socials).to_have_count(4)
+
+    for i in range(4):
+
+        card = all_expert_cards.nth(i)
+        social_container = all_socials.nth(i)
+
+        # Sprawdza widoczność zdjęcia
+        expect(card).to_be_visible()
+        expect(card.locator('img')).to_be_visible()
+
+        # Sprawdza widoczność imienia i nazwiska eksperta
+        expect(card.locator('.pagelayer-service-heading')).to_be_visible()
+        expect(card.locator('.pagelayer-service-heading')).not_to_be_empty()
+
+        # Sprawdza widoczność roli i opisu eksperta
+        expect(card.locator('.pagelayer-service-text')).to_be_visible()
+        expect(card.locator('.pagelayer-service-text')).not_to_be_empty()
+
+        # Sprawdza zawartość kontenera z linkami do social media
+        expect(social_container).to_be_visible()
+        expect(social_container.locator('a')).to_have_count(3)
