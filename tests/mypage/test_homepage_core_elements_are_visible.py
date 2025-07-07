@@ -9,10 +9,10 @@ NAV_LINKS = [
 ]
 
 SOCIAL_MEDIA_DATA = [
-    ("facebook_icon_link", "https://www.facebook.com/rickroll548/?locale=pl_PL"),
-    ("twitter_icon_link", "https://x.com/rickroll_meme_"),
-    ("youtube_icon_link", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-    ("instagram_icon_link", "https://www.instagram.com/rick_astley_memes/?hl=pl")
+    ("facebook.com", "https://www.facebook.com/rickroll548/?locale=pl_PL"),
+    ("x.com", "https://x.com/rickroll_meme_"),
+    ("youtube.com", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
+    ("instagram.com", "https://www.instagram.com/rick_astley_memes/?hl=pl")
 ]
 
 FRONT_NAV_LINKS = [
@@ -53,10 +53,10 @@ def test_navigation_links_are_visible(home_page: HomePage, link_text: str):
     nav_link = home_page.get_nav_link_by_text(link_text)
     expect(nav_link).to_be_visible()
 
-@pytest.mark.parametrize("icon_locator_name, expected_url", SOCIAL_MEDIA_DATA)
-def test_social_media_links_are_correct(home_page: HomePage, icon_locator_name: str, expected_url: str):
+@pytest.mark.parametrize("href_part, expected_url", SOCIAL_MEDIA_DATA)
+def test_social_media_links_are_correct(home_page: HomePage, href_part: str, expected_url: str):
     """Sprawdza widoczność i atrybut href ikon social media."""
-    icon_locator = getattr(home_page, icon_locator_name)
+    icon_locator = home_page.get_social_media_icon_by_href(href_part)
     expect(icon_locator).to_be_visible()
     expect(icon_locator).to_have_attribute("href", expected_url)
 

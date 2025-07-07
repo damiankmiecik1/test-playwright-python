@@ -57,11 +57,7 @@ class HomePage:
         self.social_media_container = page.locator('[data-testid="social-media-container"]')
         self.phone_container = page.locator('[data-testid="phone-container"]')
 
-        # Locator for phone and each social media icon
-        self.facebook_icon_link = self.social_media_container.locator('a[href*="https://www.facebook.com/rickroll548/?locale=pl_PL"]')
-        self.twitter_icon_link = self.social_media_container.locator('a[href*="https://x.com/rickroll_meme_"]')
-        self.youtube_icon_link = self.social_media_container.locator('a[href*="https://www.youtube.com/watch?v=dQw4w9WgXcQ"]')
-        self.instagram_icon_link = self.social_media_container.locator('a[href*="https://www.instagram.com/rick_astley_memes/?hl=pl"]')
+        # Locator for phone icon and number
         self.phone_icon = self.phone_container.locator(".pagelayer-phone-icon")
         self.phone_number = self.phone_container.locator("span.pagelayer-phone")
 
@@ -77,6 +73,10 @@ class HomePage:
 
         # Locator for all cards in the courses section
         self.course_cards = page.locator('[data-testid="course-cards"]')
+
+    def get_social_media_icon_by_href(self, href: str) -> Locator:
+        """Zwraca lokator ikony social media, szukając go po fragmencie atrybutu href."""
+        return self.social_media_container.locator(f'a[href*="{href}"]')
 
     def navigate(self):
         self.page.goto("/", wait_until="domcontentloaded")
