@@ -4,15 +4,23 @@ from page_objects.home_page import HomePage
 
 # Lista linków do sprawdzenia
 NAV_LINKS = [
-    "Strona główna", "Blog", "O nas", "Galeria", "Kontakt", 
-    "Sklep", "Koszyk", "Rejestracja", "Moje konto", "Login"
+    ("Strona główna", "https://srv88380.seohost.com.pl/"),
+    ("Blog", "https://srv88380.seohost.com.pl/blog/"),
+    ("O nas", "https://srv88380.seohost.com.pl/onas/"),
+    ("Galeria", "https://srv88380.seohost.com.pl/galeria/"),
+    ("Kontakt", "https://srv88380.seohost.com.pl/kontakt/"),
+    ("Sklep", "https://srv88380.seohost.com.pl/sklep/"),
+    ("Koszyk", "https://srv88380.seohost.com.pl/koszyk/"),
+    ("Rejestracja", "https://srv88380.seohost.com.pl/rejestracja/"),
+    ("Moje konto", "https://srv88380.seohost.com.pl/moje-konto-2/"),
+    ("Login", "https://srv88380.seohost.com.pl/login-2/"),
 ]
 
 SOCIAL_MEDIA_DATA = [
     ("facebook.com", "https://www.facebook.com/rickroll548/?locale=pl_PL"),
     ("x.com", "https://x.com/rickroll_meme_"),
     ("youtube.com", "https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
-    ("instagram.com", "https://www.instagram.com/rick_astley_memes/?hl=pl")
+    ("instagram.com", "https://www.instagram.com/rick_astley_memes/?hl=pl"),
 ]
 
 FRONT_SECTION_LINKS = [
@@ -26,22 +34,24 @@ def test_header_content_is_visible_and_correct(home_page: HomePage):
     """Sprawdza widoczność i treść głównych elementów nagłówka."""
     header = home_page.header
 
-    expect(header.main_header).to_be_visible()
-    expect(header.main_header).to_have_text("Pasja Finansów")
+    header_elements_to_check = [
+        (header.main_header, "Pasja Finansów"),
+        (header.header_email, "contact@domain.com"),
+        (header.contact_question, "Masz pytania?"),
+        (header.phone_number, "+48112233445"),
+    ]
 
-    expect(header.header_email).to_be_visible()
-    expect(header.header_email).to_have_text("contact@domain.com")
+    header.main_header.scroll_into_view_if_needed()
 
-    expect(header.contact_question).to_be_visible()
-    expect(header.contact_question).to_have_text("Masz pytania?")
+    for locator, expected_text in header_elements_to_check:
+        expect(locator).to_be_visible()
+        expect(locator).to_have_text(expected_text)
 
-    expect(header.phone_number).to_be_visible()
-    expect(header.phone_number).to_have_text("+48112233445")
-
-@pytest.mark.parametrize("link_text", NAV_LINKS)
-def test_navigation_links_are_visible(home_page: HomePage, link_text: str):
+@pytest.mark.parametrize("link_text, expected_url", NAV_LINKS)
+def test_navigation_links_are_visible(home_page: HomePage, link_text: str, expected_url: str):
     nav_link = home_page.header.get_nav_link_by_text(link_text)
     expect(nav_link).to_be_visible()
+    expect(nav_link).to_have_attribute("href", expected_url)
 
 @pytest.mark.parametrize("href_part, expected_url", SOCIAL_MEDIA_DATA)
 def test_social_media_links_are_correct(home_page: HomePage, href_part: str, expected_url: str):
@@ -52,20 +62,21 @@ def test_social_media_links_are_correct(home_page: HomePage, href_part: str, exp
 
 def test_front_content_is_visible_and_correct(home_page: HomePage):
     """Sprawdza widoczność i treść głównych elementów frontu."""
-    expect(home_page.front_title).to_be_visible()
-    expect(home_page.front_title).to_have_text("PASJA FINANSÓW")
 
-    expect(home_page.front_subtitle).to_be_visible()
-    expect(home_page.front_subtitle).to_have_text("Pomożemy Ci odkryć nieznane!")
+    front_elements_to_check = [
+        (home_page.front_title, "PASJA FINANSÓW"),
+        (home_page.front_subtitle, "Pomożemy Ci odkryć nieznane!"),
+        (home_page.begin_course_container, "ZACZNIJ KURS"),
+        (home_page.online_courses_container, "Kursy online\nDowiedz się więcej"),
+        (home_page.experts_container, "Eksperci w dziedzinie\nDowiedz się więcej"),
+        (home_page.library_container, "Biblioteka wiedzy\nDowiedz się więcej"),
+    ]
 
-    expect(home_page.begin_course_container).to_be_visible()
-    expect(home_page.begin_course_container).to_have_text("ZACZNIJ KURS")
-    expect(home_page.online_courses_container).to_be_visible()
-    expect(home_page.online_courses_container).to_have_text("Kursy online\nDowiedz się więcej")
-    expect(home_page.experts_container).to_be_visible()
-    expect(home_page.experts_container).to_have_text("Eksperci w dziedzinie\nDowiedz się więcej")
-    expect(home_page.library_container).to_be_visible()
-    expect(home_page.library_container).to_have_text("Biblioteka wiedzy\nDowiedz się więcej")
+    home_page.front_title.scroll_into_view_if_needed()
+
+    for locator, expected_text in front_elements_to_check:
+        expect(locator).to_be_visible()
+        expect(locator).to_have_text(expected_text)
 
 @pytest.mark.parametrize("section_name, expected_url", FRONT_SECTION_LINKS)
 def test_front_section_links_are_correct(home_page: HomePage, section_name: str, expected_url: str):
@@ -82,44 +93,28 @@ def test_footer_elements_are_visible(home_page: HomePage):
     """Sprawdza widoczność elementów stopki."""
     footer = home_page.footer
 
-    expect(footer.footer_about).to_be_visible()
-    expect(footer.footer_about).to_have_text("O nas")
+    footer_elements_to_check = [
+        (footer.footer_about, "O nas"),
+        (footer.footer_about_text, "Pasjonujemy się szeroko pojętymi finansami, a nasza specjalizacja to rynek bitcoina. U nas dowiesz się dlaczego waluty fiducjarne skazane są, w długim terminie, na dalszą dewaluację, a aktywa, których ilości nie da się łatwo i szybko dodać, skazane są na dalszy wzrost."),
+        (footer.footer_links, "Linki"),
+        (footer.footer_links_text, "O nas\nKontakt"),
+        (footer.footer_reports, "Raporty"),
+        (footer.footer_reports_text, "Podaj twój adres e-mail, aby być na bieżąco ze wszystkimi raportami."),
+        (footer.footer_reports_email, "SUBSKRYBUJ"),
+        (footer.footer_contact, "Kontakt"),
+        (footer.footer_contact_text, "+48112233445"),
+        (footer.footer_contact_timeframe, "Poniedziałek – Piątek 08:00 – 18:00"),
+        (footer.footer_contact_address, "ul. Warszawska 10, Katowice 40-500, Polska"),
+        (footer.footer_contact_email, "contact@domain.com"),
+        (footer.footer_copyright, "© 2025 Pasja Finansów"),
+    ]
 
-    expect(footer.footer_about_text).to_be_visible()
-    expect(footer.footer_about_text).to_have_text("Pasjonujemy się szeroko pojętymi finansami, a nasza specjalizacja to rynek bitcoina. U nas dowiesz się dlaczego waluty fiducjarne skazane są, w długim terminie, na dalszą dewaluację, a aktywa, których ilości nie da się łatwo i szybko dodać, skazane są na dalszy wzrost.")
+    footer.footer_about.scroll_into_view_if_needed()
 
-    expect(footer.footer_links).to_be_visible()
-    expect(footer.footer_links).to_have_text("Linki")
+    for locator, expected_text in footer_elements_to_check:
+        expect(locator).to_be_visible()
+        expect(locator).to_have_text(expected_text)
 
-    expect(footer.footer_links_text).to_be_visible()
-    expect(footer.footer_links_text).to_have_text("O nas\nKontakt")
-
-    expect(footer.footer_reports).to_be_visible()
-    expect(footer.footer_reports).to_have_text("Raporty")
-
-    expect(footer.footer_reports_text).to_be_visible()
-    expect(footer.footer_reports_text).to_have_text("Podaj twój adres e-mail, aby być na bieżąco ze wszystkimi raportami.")
-
-    expect(footer.footer_reports_email).to_be_visible()
-    expect(footer.footer_reports_email).to_have_text("SUBSKRYBUJ")
-
-    expect(footer.footer_contact).to_be_visible()
-    expect(footer.footer_contact).to_have_text("Kontakt")
-
-    expect(footer.footer_contact_text).to_be_visible()
-    expect(footer.footer_contact_text).to_have_text("+48112233445")
-
-    expect(footer.footer_contact_timeframe).to_be_visible()
-    expect(footer.footer_contact_timeframe).to_have_text("Poniedziałek – Piątek 08:00 – 18:00")
-
-    expect(footer.footer_contact_address).to_be_visible()
-    expect(footer.footer_contact_address).to_have_text("ul. Warszawska 10, Katowice 40-500, Polska")
-
-    expect(footer.footer_contact_email).to_be_visible()
-    expect(footer.footer_contact_email).to_have_text("contact@domain.com")
-
-    expect(footer.footer_copyright).to_be_visible()
-    expect(footer.footer_copyright).to_have_text("© 2025 Pasja Finansów")
 
 def test_reports_form_shows_error_message_for_valid_email(home_page: HomePage):
     """Sprawdza, czy formularz raportów wyświetla oczekiwany komunikat błędu (bo backend nie działa)."""
