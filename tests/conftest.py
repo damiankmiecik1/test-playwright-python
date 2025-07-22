@@ -1,18 +1,31 @@
+import os
 import pytest
 from playwright.sync_api import Page
-from playwright.sync_api import Browser, BrowserContext, Page
 from page_objects.home_page import HomePage
 from page_objects.contact_page import ContactPage
 
-try:
-    import tkinter
-    root = tkinter.Tk()
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    root.destroy()
-    SCREEN_SIZE = {"width": screen_width, "geight": screen_height}
-except (ImportError, RuntimeError):
-    SCREEN_SIZE = {"width": 1920, "height": 1080}  # Default screen size if tkinter is not available
+def get_screen_size() -> dict:
+    """Tries to determine the screen size. Returns a default value if GUI is not available."""
+    # Check if we are in a GUI environment
+    if os.environ.get("DISPLAY"):
+        try:
+            # Import tkinter only if needed
+            import tkinter
+
+            root = tkinter.Tk()
+            root.withdraw()
+            screen_width = root.winfo_screenwidth()
+            screen_height = root.winfo_screenheight()
+            root.destroy()
+            return {"width": screen_width, "height": screen_height}
+        except (ImportError, RuntimeError):
+            # Emergency fallback if something goes wrong
+            pass
+    # Default value for GUI-less environments or in case of errors
+    return {"width": 1920, "height": 1080}
+
+# Call the function once, at the start
+SCREEN_SIZE = get_screen_size()
 
 @pytest.fixture(scope="session")
 def browser_context_args(browser_context_args):

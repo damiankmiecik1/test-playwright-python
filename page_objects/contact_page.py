@@ -31,6 +31,9 @@ class ContactPage:
     def navigate(self):
         self.page.goto("kontakt/", wait_until="domcontentloaded")
 
+    def get_send_button(self) -> Locator:
+        """Returns the locator for the 'Send' link in the contact form."""
+        return self.send_button.locator('button:has-text("WYŚLIJ")')
 
 
 
