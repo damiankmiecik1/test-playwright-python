@@ -4,7 +4,7 @@ from page_objects.components.footer_component import FooterComponent
 
 class ContactPage:
     """Represents the contact page of the application"""
-    def __init__(self, page:Page):
+    def __init__(self, page: Page):
 
         self.page = page
 
@@ -18,6 +18,10 @@ class ContactPage:
         self.title_redirect = page.locator('[data-testid="redirect"]')
         self.contact_form = page.locator('[data-testid="contact-form"]')
         self.form_details = page.locator('[data-testid="form-details"]')
+        self.name_input = page.get_by_placeholder("Imię")
+        self.subject_input = page.get_by_placeholder("Temat")
+        self.email_input = page.get_by_placeholder("Email")
+        self.message_textarea = page.get_by_placeholder("Wiadomość")
         self.city = page.locator('[data-testid="city"]')
         self.address = page.locator('[data-testid="address"]')
         self.address_details = page.locator('[data-testid="address-details"]')
@@ -33,7 +37,7 @@ class ContactPage:
 
     def get_send_button(self) -> Locator:
         """Returns the locator for the 'Send' link in the contact form."""
-        return self.send_button.locator('button:has-text("WYŚLIJ")')
+        return self.form_details.locator('button[type="submit"][form="contact-form"]')
 
 
 
