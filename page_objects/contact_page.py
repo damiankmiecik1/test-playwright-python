@@ -22,6 +22,7 @@ class ContactPage:
         self.subject_input = page.get_by_placeholder("Temat")
         self.email_input = page.get_by_placeholder("Email")
         self.message_textarea = page.get_by_placeholder("Wiadomość")
+        self.form_details_message_not_sent = page.locator('.pagelayer-message-box:visible')
         self.city = page.locator('[data-testid="city"]')
         self.address = page.locator('[data-testid="address"]')
         self.address_details = page.locator('[data-testid="address-details"]')

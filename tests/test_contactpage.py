@@ -128,6 +128,24 @@ def test_send_button_is_visible_and_correct(contact_page: ContactPage):
     expect(send_button).to_have_text("WYŚLIJ")
     expect(send_button).to_have_attribute("type", "submit")
 
+def test_form_shows_error_message(contact_page: ContactPage):
+    """Verifies if contact form displays expected error message (due to backend not working)"""
+    contact_page.email_input.fill("poprawny@email.com")
+    contact_page.get_send_button().click()
+    
+    expect(contact_page.form_details_message_not_sent).to_be_visible()
+    expect(contact_page.form_details_message_not_sent).to_have_text("Your message could not be sent ! Please try again.")
+
+def test_contact_form_shows_error_message_for_email_without_at_sign(contact_page: ContactPage):
+    """Sprawdza, czy pokazuje błąd dla wypełnionego pola bez znaku małpy."""
+    
+    contact_page.email_input.fill("niepoprawnyemail.com")
+    contact_page.get_send_button().click()
+    validation_message = contact_page.email_input.evaluate(
+        "element => element.validationMessage"
+    )
+    assert validation_message != ""
+
 def test_contactpage_has_header_and_footer(contact_page: ContactPage):
     """Smoke test: Checks if header and footer components are rendered on the page."""
     expect(contact_page.header.main_header).to_be_visible()

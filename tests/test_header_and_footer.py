@@ -88,7 +88,7 @@ def test_reports_form_shows_error_message_for_valid_email(home_page: HomePage):
     expect(home_page.footer.reports_from_email_message).to_have_text("Your message could not be sent ! Please try again.")  # Oczekiwany komunikat błędu
 
 def test_reports_form_shows_error_message_for_empty_email(home_page: HomePage):
-    """Sprawdza, czy natywna walidacja przeglądarki HTML5 działa i pokazuje błąd dla pustego pola."""
+    """Sprawdza, czy pokazuje błąd dla pustego pola."""
     footer = home_page.footer
     
     footer.reports_from_email_input.click()  # Klika w puste pole
@@ -99,7 +99,7 @@ def test_reports_form_shows_error_message_for_empty_email(home_page: HomePage):
     assert validation_message != ""
 
 def test_reports_form_shows_error_message_for_email_without_at_sign(home_page: HomePage):
-    """Sprawdza, czy natywna walidacja przeglądarki HTML5 działa i pokazuje błąd dla wypełnionego pola bez znaku małpy."""
+    """Sprawdza, czy pokazuje błąd dla wypełnionego pola bez znaku małpy."""
     footer = home_page.footer
     
     footer.reports_from_email_input.fill("niepoprawnyemail.com")
@@ -110,7 +110,7 @@ def test_reports_form_shows_error_message_for_email_without_at_sign(home_page: H
     assert validation_message != ""
 
 def test_reports_form_shows_error_message_for_email_without_text_after_at_sign(home_page: HomePage):
-    """Sprawdza, czy natywna walidacja przeglądarki HTML5 działa i pokazuje błąd dla wypełnionego pola bez domeny po znaku małpy."""
+    """Sprawdza, czy pokazuje błąd dla wypełnionego pola bez domeny po znaku małpy."""
     footer = home_page.footer
     
     footer.reports_from_email_input.fill("niepoprawnyemail@")
