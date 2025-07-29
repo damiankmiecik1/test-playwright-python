@@ -3,6 +3,7 @@ import pytest
 from playwright.sync_api import Page
 from page_objects.home_page import HomePage
 from page_objects.contact_page import ContactPage
+from page_objects.login_page import LoginPage
 
 def get_screen_size() -> dict:
     """Tries to determine the screen size. Returns a default value if GUI is not available."""
@@ -50,3 +51,10 @@ def contact_page(page: Page) -> ContactPage:
     contact_page = ContactPage(page)
     contact_page.navigate()
     return contact_page
+
+@pytest.fixture
+def login_page(page: Page) -> LoginPage:
+    """Fixture to initialize LoginPage object and navigate to it."""
+    login_page = LoginPage(page)
+    login_page.navigate()
+    return login_page

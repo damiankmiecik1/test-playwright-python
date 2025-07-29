@@ -12,7 +12,7 @@ NAV_LINKS = [
     ("Sklep", "https://srv88380.seohost.com.pl/sklep/"),
     ("Koszyk", "https://srv88380.seohost.com.pl/koszyk/"),
     ("Rejestracja", "https://srv88380.seohost.com.pl/rejestracja/"),
-    ("Moje konto", "https://srv88380.seohost.com.pl/moje-konto-2/"),
+    ("Moje konto", "https://srv88380.seohost.com.pl/moje-konto/"),
     ("Login", "https://srv88380.seohost.com.pl/login-2/"),
 ]
 
